@@ -42,18 +42,9 @@ public class Snacks {
         snacks.add(snack);
     }
 
-//    public static void showSnacks(){
-//        snacks.forEach(System.out :: println);
-//    }
-
     public static void showSnacks(){
-        String snacksInventory = "";
-        for(Snack snack: snacks){
-            snacksInventory += snack.toString() + "\n";
-        }
         System.out.println("-----Snacks in the inventory-------");
-        System.out.println(snacksInventory);
-
+        snacks.forEach(System.out :: println);
     }
 
 }
