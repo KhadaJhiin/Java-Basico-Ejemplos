@@ -1,9 +1,11 @@
-package snackMachine;
+package snackMachine.servicio;
+
+import snackMachine.dominio.Snack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Snacks {
+public class ServiceSnacksList implements IsnacksService{
 
 
     //--------------------------------------------------------
@@ -29,7 +31,7 @@ public class Snacks {
     //      Getters
 
 
-    public static List<Snack> getSnacks() {
+    public List<Snack> getSnacks() {
         return snacks;
     }
 
@@ -38,11 +40,11 @@ public class Snacks {
     //      Methods
 
 
-    public static void addSnack(Snack snack){
+    public void addSnack(Snack snack){
         snacks.add(snack);
     }
 
-    public static void showSnacks(){
+    public void showSnacks(){
         System.out.println("-----Snacks in the inventory-------");
         snacks.forEach(System.out :: println);
     }
