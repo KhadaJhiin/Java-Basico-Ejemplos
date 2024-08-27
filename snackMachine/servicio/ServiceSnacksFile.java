@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class ServiceSnacksFile implements IsnacksService{
         try {
             exist = file.exists();
             if (exist){
-                this.snacks = getSnacks();
+                this.snacks = getSnack();
             }else{
                 PrintWriter exit = new PrintWriter(new FileWriter(file));
                 exit.close();
@@ -54,6 +56,29 @@ public class ServiceSnacksFile implements IsnacksService{
         this.addSnack(new Snack("Fries",70));
         this.addSnack(new Snack("Refresh",50));
         this.addSnack(new Snack("Sandwich",120));
+    }
+
+    private List<Snack> getSnack(){
+        List<Snack> snacks = new ArrayList<Snack>();
+
+        try {
+
+            List<String> lines = Files.readAllLines(Paths.get(FILE_NAME));
+
+            for(String line : lines){
+                String[] snackLine = line.split(",");
+                String idSnack = snackLine[0];
+                String name = snackLine[1];
+                double price = Double.parseDouble(snackLine[2]);
+                Snack snack = new Snack(name,price);
+
+                snacks.add(snack);
+            }
+        }catch (Exception e){
+            System.out.println("Error to read snack file: " + e.getMessage() );
+            e.printStackTrace();
+        }
+        return snacks;
     }
 
     @Override
@@ -85,11 +110,19 @@ public class ServiceSnacksFile implements IsnacksService{
 
     @Override
     public void showSnacks() {
+        System.out.println("---Snacks to inventory---");
+
+        String snackInventory = "";
+
+        for (Snack snack: this.snacks){
+            snackInventory += snack.toString() + "\n";
+        }
+        System.out.println(snackInventory);
 
     }
 
     @Override
     public List<Snack> getSnacks() {
-        return List.of();
+        return this.snacks;
     }
 }
